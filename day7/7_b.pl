@@ -25,9 +25,21 @@ foreach my $line (@lines) {
 }
 
 # Iterate through matrix
-# if previous line had | in that position and the current symbol is ^; split
-# if the current symbol is a .; replace
 my $pass = 0;
+
+# Way this works: First, forward all values in one iteration from the previous row
+# Next, iterate over the same row again and merge values together
+# Example:
+# ....S....
+# ....1....
+# ...1^1...
+# ...1.1...
+# ..1^2^1..
+# ..1.2.1..
+# .1^121^1.
+# .1.121.1.
+# 1^2^4^2^1
+# 1.2.4.2.1
 
 for (my $i = 1; $i < @matrix; $i++) {
   for (my $j = 0; $j < @{$matrix[$i]}; $j++) {
@@ -74,13 +86,4 @@ foreach my $value (@{$matrix[@matrix - 1]}) {
   }
 }
 
-my $naive_pass = 0;
-foreach my $row (@matrix) {
-  foreach my $val (@{$row}) {
-    $naive_pass += 2 if $val eq '^';
-  }
-}
-
 print "Final pass: $pass\n";
-$naive_pass -= 4;
-print "Naive pass: $naive_pass\n";
