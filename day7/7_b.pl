@@ -8,7 +8,8 @@ use Data::Dumper;
 $Data::Dumper::Indent = 0;
 
 my $fn = "data";
-$fn = "test" if $ENV{TEST};
+$fn = "test" if $ENV{TEST} && $ENV{TEST} == 1;
+$fn = "test" . $ENV{TEST} if $ENV{TEST} && $ENV{TEST} != 1;
 
 open(my $FH, '<', $fn) or die("Could not open file $fn: " . $!);
 
@@ -47,13 +48,13 @@ for (my $i = 1; $i < @matrix; $i++) {
         $matrix[$i]->[$j-1] += $current_val;
       }
       elsif ($matrix[$i]->[$j-1] eq '.') {
-        $matrix[$i]->[$j-1] = 1;
+        $matrix[$i]->[$j-1] = $current_val;
       }
       if ($matrix[$i]->[$j+1] =~ /\d+/) {
         $matrix[$i]->[$j+1] += $current_val;
       }
       elsif ($matrix[$i]->[$j+1] eq '.') {
-        $matrix[$i]->[$j+1] = 1;
+        $matrix[$i]->[$j+1] = $current_val;
       }
     }
   }
