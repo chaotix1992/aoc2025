@@ -1,2 +1,4 @@
 **/test*
 **/data
+**/go.mod
+**/go.sum
